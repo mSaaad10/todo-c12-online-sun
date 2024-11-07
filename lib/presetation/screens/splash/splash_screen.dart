@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
       Duration(seconds: 3),
       () {
-        Navigator.pushReplacementNamed(context, RoutesManager.homeRoute);
+        Navigator.pushReplacementNamed(context, RoutesManager.home);
       },
     );
   }

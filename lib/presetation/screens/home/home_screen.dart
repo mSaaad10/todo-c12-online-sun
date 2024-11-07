@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:todo_app_c12_online_sun/presetation/screens/home/tabs/settings_tab/tasks_tab.dart';
 import 'package:todo_app_c12_online_sun/presetation/screens/home/tabs/tasks_tab/tasks_tab.dart';
 import 'package:todo_app_c12_online_sun/presetation/screens/home/task_bottom_sheet/task_bottom_sheet.dart';
@@ -13,10 +12,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
-  List<Widget> tabs = [
-    TasksTab(),
-    SettingsTab(),
-  ];
+  GlobalKey<TasksTabState> tasksTabKey = GlobalKey();
+  List<Widget> tabs = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    tabs = [
+      TasksTab(
+        key: tasksTabKey,
+      ),
+      SettingsTab(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,18 +59,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildFab() => FloatingActionButton(
-        onPressed: () {
-          showTaskBottomSheet();
+        onPressed: () async {
+          await TaskBottomSheet.show(context); // stop
+          tasksTabKey.currentState?.readTodosFromFireStore();
         },
         child: const Icon(
           Icons.add,
         ),
       );
-
-  void showTaskBottomSheet() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => TaskBottomSheet.show(),
-    );
-  }
 }

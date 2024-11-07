@@ -12,6 +12,7 @@ class AppTheme {
           primary: ColorsManager.blue,
           onPrimary: ColorsManager.white),
       appBarTheme: AppBarTheme(
+        elevation: 0,
         backgroundColor: ColorsManager.blue,
         //toolbarHeight: 157,
         titleTextStyle: AppLightStyles.appBarTextStyle,

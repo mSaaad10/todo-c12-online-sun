@@ -1,11 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo_app_c12_online_sun/core/utils/app_styles.dart';
 import 'package:todo_app_c12_online_sun/core/utils/colors_manager.dart';
-import 'package:todo_app_c12_online_sun/core/utils/date_utils.dart';
+import 'package:todo_app_c12_online_sun/database/model/todo_dm.dart';
+import 'package:todo_app_c12_online_sun/database/model/user_DM.dart';
 
 class TaskItem extends StatelessWidget {
-  const TaskItem({super.key});
+  TaskItem({super.key, required this.todo, required this.onDeletedTask});
+
+  TodoDM todo;
+  VoidCallback onDeletedTask;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +25,8 @@ class TaskItem extends StatelessWidget {
             // An action can be bigger than the others.
             flex: 2,
             onPressed: (context) {
-              print('Clicked');
+              deleteTodo(todo);
+              onDeletedTask();
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
@@ -93,18 +99,18 @@ class TaskItem extends StatelessWidget {
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Task title', style: AppLightStyles.tasksTitle),
+                  Text(todo.title, style: AppLightStyles.tasksTitle),
                   SizedBox(
                     height: 4,
                   ),
-                  Text('Task description', style: AppLightStyles.taskDesc),
+                  Text(todo.description, style: AppLightStyles.taskDesc),
                   SizedBox(
                     height: 4,
                   ),
-                  Text(
-                    DateTime.now().toFormattedDate,
-                    style: AppLightStyles.taskDate,
-                  )
+                  // Text(
+                  //   DateTime.now().toFormattedDate,
+                  //   style: AppLightStyles.taskDate,
+                  // )
                 ],
               ),
               Spacer(),
@@ -124,5 +130,14 @@ class TaskItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void deleteTodo(TodoDM todo) async {
+    CollectionReference todoCollection = FirebaseFirestore.instance
+        .collection(UserDM.collectionName)
+        .doc(UserDM.currentUser!.id)
+        .collection(TodoDM.collectionName);
+    DocumentReference task = todoCollection.doc(todo.id);
+    await task.delete();
   }
 }

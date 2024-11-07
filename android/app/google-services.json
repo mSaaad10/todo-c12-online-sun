@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "2259450597",
+    "project_id": "todo-c12-online-sun",
+    "storage_bucket": "todo-c12-online-sun.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:2259450597:android:e0e23bfdd0adf323cbb20c",
+        "android_client_info": {
+          "package_name": "com.example.todo_app_c12_online_sun"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjK8RUDGF0y-HxDTB-YZZl7KT3nnKkoXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
